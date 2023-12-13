@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { addTodo } from "../redux/modules/todos";
+import axios from "axios";
+import uuid from "react-uuid";
 
-function Form() {
+function Form({ todos, setTodos }: any) {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
-  const dispatch = useDispatch();
-
-  const todos = useSelector((state: any) => state.todos);
 
   const titleOnchangeHandler = (e: any) => {
     setTitle(e.target.value);
@@ -18,15 +15,20 @@ function Form() {
     setContent(e.target.value);
   };
 
-  const onSubmitHandler = (e: any) => {
+  const onSubmitHandler = async (e: any) => {
     e.preventDefault();
+    if (title === "" || content === "") {
+      alert("제목과 내용을 입력해주세요");
+      return false;
+    }
     const newTodo = {
-      id: todos.length + 1,
+      id: uuid(),
       title,
       content,
       isDone: false,
     };
-    dispatch(addTodo(newTodo));
+    await axios.post("http://localhost:4001/todos", newTodo);
+    setTodos([...todos, newTodo]);
     setTitle("");
     setContent("");
   };

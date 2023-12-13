@@ -1,27 +1,33 @@
-import React from "react";
 import styled from "styled-components";
 import { TodosType } from "../types/todos";
-import { useDispatch, useSelector } from "react-redux";
-import { removeTodo, switchTodo } from "../redux/modules/todos";
+import axios from "axios";
 
-function TodoList({ isDone }: any) {
-  const dispatch = useDispatch();
-
-  const todos = useSelector((state: any) => state.todos);
-
-  const onDeleteButtonClick = (id: number) => {
-    dispatch(removeTodo(id));
+function TodoList({ isDone, todos, setTodos }: any) {
+  const onDeleteButtonClick = async (id: number) => {
+    const answer = window.confirm("정말로 삭제하시겠습니까?");
+    if (!answer) return;
+    await axios.delete(`http://localhost:4001/todos/${id}`);
+    const newTodo = todos.filter((todo: TodosType) => todo.id !== id);
+    setTodos(newTodo);
   };
 
-  const onSwitchButtonClick = (id: number) => {
-    dispatch(switchTodo(id));
+  const onSwitchButtonClick = async (id: number) => {
+    await axios.patch(`http://localhost:4001/todos/${id}`);
+    const newTodo = todos.map((todo: TodosType) => {
+      if (todo.id === id) {
+        return { ...todo, isDone: !todo.isDone };
+      } else {
+        return todo;
+      }
+    });
+    setTodos(newTodo);
   };
 
   return (
     <Warpper>
       <h1>{isDone ? "완료 목록" : "할 일 목록"}</h1>
       {todos
-        .filter((item: TodosType) => item.isDone === isDone)
+        ?.filter((item: TodosType) => item.isDone === isDone)
         .map((item: TodosType) => {
           return (
             <Card key={item.id}>
