@@ -1,9 +1,21 @@
 import styled from "styled-components";
 import { TodosType } from "../types/todos";
 import axios from "axios";
+import { useQuery } from "react-query";
+import { getTodos } from "../api/todosAPI";
 
 function TodoList({ isDone, todos, setTodos }: any) {
-  const onDeleteButtonClick = async (id: number) => {
+  const { data, isLoading, isError } = useQuery("todos", getTodos);
+
+  if (isLoading) {
+    return <p>로딩중입니다....!</p>;
+  }
+
+  if (isError) {
+    return <p>오류가 발생하였습니다...!</p>;
+  }
+
+  const onDeleteButtonClick = async (id: string) => {
     const answer = window.confirm("정말로 삭제하시겠습니까?");
     if (!answer) return;
     await axios.delete(`http://localhost:4001/todos/${id}`);
@@ -11,7 +23,7 @@ function TodoList({ isDone, todos, setTodos }: any) {
     setTodos(newTodo);
   };
 
-  const onSwitchButtonClick = async (id: number) => {
+  const onSwitchButtonClick = async (id: string) => {
     await axios.patch(`http://localhost:4001/todos/${id}`);
     const newTodo = todos.map((todo: TodosType) => {
       if (todo.id === id) {
@@ -26,7 +38,7 @@ function TodoList({ isDone, todos, setTodos }: any) {
   return (
     <Warpper>
       <h1>{isDone ? "완료 목록" : "할 일 목록"}</h1>
-      {todos
+      {data
         ?.filter((item: TodosType) => item.isDone === isDone)
         .map((item: TodosType) => {
           return (

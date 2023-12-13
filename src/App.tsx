@@ -5,8 +5,10 @@ import TodoList from "./components/TodoList";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { TodosType } from "./types/todos";
+import { QueryClientProvider, QueryClient } from "react-query";
 
 function App() {
+  const queryClient = new QueryClient();
   const [todos, setTodos] = useState<TodosType[]>();
 
   const fetchedData = async () => {
@@ -20,9 +22,11 @@ function App() {
   return (
     <Container>
       <Header />
-      <Form todos={todos} setTodos={setTodos} />
-      <TodoList todos={todos} setTodos={setTodos} isDone={false} />
-      <TodoList todos={todos} setTodos={setTodos} isDone={true} />
+      <QueryClientProvider client={queryClient}>
+        <Form />
+        <TodoList todos={todos} setTodos={setTodos} isDone={false} />
+        <TodoList todos={todos} setTodos={setTodos} isDone={true} />
+      </QueryClientProvider>
     </Container>
   );
 }

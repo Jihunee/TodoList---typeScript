@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import uuid from "react-uuid";
+import { useMutation, useQueryClient } from "react-query";
+import { addTodo } from "../api/todosAPI";
 
-function Form({ todos, setTodos }: any) {
+function Form() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
 
@@ -14,6 +15,13 @@ function Form({ todos, setTodos }: any) {
   const contentOnchangeHandler = (e: any) => {
     setContent(e.target.value);
   };
+
+  const queryClient = useQueryClient();
+  const mutation = useMutation(addTodo, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("todos");
+    },
+  });
 
   const onSubmitHandler = async (e: any) => {
     e.preventDefault();
@@ -27,8 +35,7 @@ function Form({ todos, setTodos }: any) {
       content,
       isDone: false,
     };
-    await axios.post("http://localhost:4001/todos", newTodo);
-    setTodos([...todos, newTodo]);
+    mutation.mutate(newTodo);
     setTitle("");
     setContent("");
   };

@@ -1,10 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import todos from "../modules/todos";
 
 const store = configureStore({
-  reducer: {
-    todos,
-  },
+  reducer: {},
 });
 
 export default store;
