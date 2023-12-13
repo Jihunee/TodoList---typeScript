@@ -1,9 +1,14 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { addTodo } from "../redux/modules/todos";
 
-function Form({ todos, setTodos }: any) {
+function Form() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
+  const dispatch = useDispatch();
+
+  const todos = useSelector((state: any) => state.todos);
 
   const titleOnchangeHandler = (e: any) => {
     setTitle(e.target.value);
@@ -21,7 +26,7 @@ function Form({ todos, setTodos }: any) {
       content,
       isDone: false,
     };
-    setTodos([...todos, newTodo]);
+    dispatch(addTodo(newTodo));
     setTitle("");
     setContent("");
   };

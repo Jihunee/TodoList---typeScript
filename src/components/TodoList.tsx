@@ -1,22 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 import { TodosType } from "../types/todos";
+import { useDispatch, useSelector } from "react-redux";
+import { removeTodo, switchTodo } from "../redux/modules/todos";
 
-function TodoList({ todos, setTodos, isDone }: any) {
+function TodoList({ isDone }: any) {
+  const dispatch = useDispatch();
+
+  const todos = useSelector((state: any) => state.todos);
+
   const onDeleteButtonClick = (id: number) => {
-    const newTodo = todos.filter((todo: TodosType) => todo.id !== id);
-    setTodos(newTodo);
+    dispatch(removeTodo(id));
   };
 
   const onSwitchButtonClick = (id: number) => {
-    const newTodo = todos.map((todo: TodosType) => {
-      if (todo.id === id) {
-        return { ...todo, isDone: !todo.isDone };
-      } else {
-        return todo;
-      }
-    });
-    setTodos(newTodo);
+    dispatch(switchTodo(id));
   };
 
   return (
