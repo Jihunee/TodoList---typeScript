@@ -7,7 +7,7 @@ import axios from "axios";
 import { TodosType } from "./types/todos";
 
 function App() {
-  const [todos, setTodos] = useState<TodosType[]>();
+  const [todos, setTodos] = useState<TodosType[]>([]);
 
   const fetchedData = async () => {
     const { data } = await axios.get(`http://localhost:4001/todos`);

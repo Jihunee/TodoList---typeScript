@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { TodosType } from "../types/todos";
+import { PropsType, TodosType } from "../types/todos";
 import axios from "axios";
 
-function TodoList({ isDone, todos, setTodos }: any) {
-  const onDeleteButtonClick = async (id: number) => {
+function TodoList({ isDone, todos, setTodos }: PropsType) {
+  const onDeleteButtonClick = async (id: string) => {
     const answer = window.confirm("정말로 삭제하시겠습니까?");
     if (!answer) return;
     await axios.delete(`http://localhost:4001/todos/${id}`);
@@ -11,7 +11,7 @@ function TodoList({ isDone, todos, setTodos }: any) {
     setTodos(newTodo);
   };
 
-  const onSwitchButtonClick = async (id: number) => {
+  const onSwitchButtonClick = async (id: string) => {
     await axios.patch(`http://localhost:4001/todos/${id}`);
     const newTodo = todos.map((todo: TodosType) => {
       if (todo.id === id) {
