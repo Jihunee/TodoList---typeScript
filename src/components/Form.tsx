@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { TodosType } from "../types/todos";
 
 function Form({ todos, setTodos }: any) {
   const [title, setTitle] = useState<string>("");
@@ -15,7 +16,7 @@ function Form({ todos, setTodos }: any) {
 
   const onSubmitHandler = (e: any) => {
     e.preventDefault();
-    const newTodo = {
+    const newTodo: TodosType = {
       id: todos.length + 1,
       title,
       content,
