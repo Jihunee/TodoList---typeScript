@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { TodosType } from "../types/todos";
+import { PropsType, TodosType } from "../types/todos";
 
-function TodoList({ todos, setTodos, isDone }: any) {
+function TodoList({ todos, setTodos, isDone }: PropsType) {
   const onDeleteButtonClick = (id: number) => {
     const newTodo = todos.filter((todo: TodosType) => todo.id !== id);
     setTodos(newTodo);

@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import styled from "styled-components";
-import { TodosType } from "../types/todos";
+import { PropsType, TodosType } from "../types/todos";
 
-function Form({ todos, setTodos }: any) {
+function Form({ todos, setTodos }: Omit<PropsType, "isDone">) {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
 
-  const titleOnchangeHandler = (e: any) => {
+  const titleOnchangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
 
-  const contentOnchangeHandler = (e: any) => {
+  const contentOnchangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setContent(e.target.value);
   };
 
-  const onSubmitHandler = (e: any) => {
+  const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newTodo: TodosType = {
       id: todos.length + 1,
