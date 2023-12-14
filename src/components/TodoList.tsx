@@ -7,7 +7,7 @@ import { removeTodo, switchTodo } from "../redux/modules/todos";
 function TodoList({ isDone }: any) {
   const dispatch = useDispatch();
 
-  const todos = useSelector((state: any) => state.todos);
+  const todos: TodosType[] = useSelector((state: any) => state.todos);
 
   const onDeleteButtonClick = (id: number) => {
     dispatch(removeTodo(id));

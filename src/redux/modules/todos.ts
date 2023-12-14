@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { TodosType } from "../../types/todos";
 
-const initialState = [
+const initialState: TodosType[] = [
   {
     id: 1,
     title: "리액트 공부하기",
@@ -25,14 +26,14 @@ const todosSlice = createSlice({
   name: "todos",
   initialState,
   reducers: {
-    addTodo: (state, action) => {
+    addTodo: (state: TodosType[], action): TodosType[] => {
       return [...state, action.payload];
     },
-    removeTodo: (state, action) => {
-      return state.filter((item) => item.id !== action.payload);
+    removeTodo: (state: TodosType[], action): TodosType[] => {
+      return state.filter((item: TodosType) => item.id !== action.payload);
     },
-    switchTodo: (state, action) => {
-      return state.map((item) => {
+    switchTodo: (state: TodosType[], action): TodosType[] => {
+      return state.map((item: TodosType) => {
         if (item.id === action.payload) {
           return { ...item, isDone: !item.isDone };
         } else {

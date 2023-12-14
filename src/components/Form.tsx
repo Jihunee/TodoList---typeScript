@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { addTodo } from "../redux/modules/todos";
+import { TodosType } from "../types/todos";
 
 function Form() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const dispatch = useDispatch();
 
-  const todos = useSelector((state: any) => state.todos);
+  const todos: TodosType[] = useSelector((state: any) => state.todos);
 
   const titleOnchangeHandler = (e: any) => {
     setTitle(e.target.value);
@@ -20,7 +21,7 @@ function Form() {
 
   const onSubmitHandler = (e: any) => {
     e.preventDefault();
-    const newTodo = {
+    const newTodo: TodosType = {
       id: todos.length + 1,
       title,
       content,
