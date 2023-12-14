@@ -1,10 +1,23 @@
 import styled from "styled-components";
 import { TodosType } from "../types/todos";
-import axios from "axios";
-import { useQuery } from "react-query";
-import { getTodos } from "../api/todosAPI";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { getTodos, removeTodo, switchTodo } from "../api/todosAPI";
 
-function TodoList({ isDone, todos, setTodos }: any) {
+function TodoList({ isDone }: { isDone: boolean }) {
+  const queryClient = useQueryClient();
+
+  const deleteMutation = useMutation(removeTodo, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("todos");
+    },
+  });
+
+  const switchMutation = useMutation(switchTodo, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("todos");
+    },
+  });
+
   const { data, isLoading, isError } = useQuery("todos", getTodos);
 
   if (isLoading) {
@@ -18,26 +31,16 @@ function TodoList({ isDone, todos, setTodos }: any) {
   const onDeleteButtonClick = async (id: string) => {
     const answer = window.confirm("정말로 삭제하시겠습니까?");
     if (!answer) return;
-    await axios.delete(`http://localhost:4001/todos/${id}`);
-    const newTodo = todos.filter((todo: TodosType) => todo.id !== id);
-    setTodos(newTodo);
+    deleteMutation.mutate(id);
   };
 
   const onSwitchButtonClick = async (id: string) => {
-    await axios.patch(`http://localhost:4001/todos/${id}`);
-    const newTodo = todos.map((todo: TodosType) => {
-      if (todo.id === id) {
-        return { ...todo, isDone: !todo.isDone };
-      } else {
-        return todo;
-      }
-    });
-    setTodos(newTodo);
+    switchMutation.mutate(id);
   };
 
   return (
     <Warpper>
-      <h1>{isDone ? "완료 목록" : "할 일 목록"}</h1>
+      <h1>{isDone ? "완료한 일 ✅" : "해야 할 일💥"}</h1>
       {data
         ?.filter((item: TodosType) => item.isDone === isDone)
         .map((item: TodosType) => {

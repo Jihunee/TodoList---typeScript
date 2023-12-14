@@ -1,27 +1,15 @@
 {
   "todos": [
     {
-      "id": "da2a31c5-70ff-7b5c-5afa-735f18024ca7",
-      "title": "리액트 공부하기",
-      "content": "강의 듣기",
-      "isDone": false
-    },
-    {
       "id": "8ca7e627-2eb4-6291-b023-d5250ba1b613",
       "title": "타입 스크립트 공부하기 ",
       "content": "강의 듣기",
       "isDone": false
     },
     {
-      "id": "0363eb0c-5179-e30e-9579-0bad48d3d466",
-      "title": "과제하기",
-      "content": "TodoList만들기",
-      "isDone": false
-    },
-    {
-      "id": "be89a64a-64c9-032c-f503-14f85774167c",
-      "title": "2",
-      "content": "2",
+      "id": "c05a1390-d903-548b-0a00-e8c191a5c443",
+      "title": "리액트 공부하기",
+      "content": "강의 듣기",
       "isDone": false
     }
   ]

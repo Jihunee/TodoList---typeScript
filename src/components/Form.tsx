@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import styled from "styled-components";
 import uuid from "react-uuid";
 import { useMutation, useQueryClient } from "react-query";
 import { addTodo } from "../api/todosAPI";
+import { TodosType } from "../types/todos";
 
 function Form() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
 
-  const titleOnchangeHandler = (e: any) => {
+  const titleOnchangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
 
-  const contentOnchangeHandler = (e: any) => {
+  const contentOnchangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setContent(e.target.value);
   };
 
@@ -23,13 +24,13 @@ function Form() {
     },
   });
 
-  const onSubmitHandler = async (e: any) => {
+  const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (title === "" || content === "") {
       alert("제목과 내용을 입력해주세요");
       return false;
     }
-    const newTodo = {
+    const newTodo: TodosType = {
       id: uuid(),
       title,
       content,
