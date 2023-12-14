@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { TodosType } from "../types/todos";
+import { StateType, TodosType } from "../types/todos";
 import { useDispatch, useSelector } from "react-redux";
 import { removeTodo, switchTodo } from "../redux/modules/todos";
 
-function TodoList({ isDone }: any) {
+function TodoList({ isDone }: { isDone: boolean }) {
   const dispatch = useDispatch();
 
-  const todos: TodosType[] = useSelector((state: any) => state.todos);
+  const todos: TodosType[] = useSelector((state: StateType) => state.todos);
 
   const onDeleteButtonClick = (id: number) => {
     dispatch(removeTodo(id));

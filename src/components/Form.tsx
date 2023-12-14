@@ -1,25 +1,25 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { addTodo } from "../redux/modules/todos";
-import { TodosType } from "../types/todos";
+import { StateType, TodosType } from "../types/todos";
 
 function Form() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const dispatch = useDispatch();
 
-  const todos: TodosType[] = useSelector((state: any) => state.todos);
+  const todos: TodosType[] = useSelector((state: StateType) => state.todos);
 
-  const titleOnchangeHandler = (e: any) => {
+  const titleOnchangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
 
-  const contentOnchangeHandler = (e: any) => {
+  const contentOnchangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setContent(e.target.value);
   };
 
-  const onSubmitHandler = (e: any) => {
+  const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newTodo: TodosType = {
       id: todos.length + 1,

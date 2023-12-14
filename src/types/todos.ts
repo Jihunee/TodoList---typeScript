@@ -4,3 +4,7 @@ export type TodosType = {
   content: string;
   isDone: boolean;
 };
+
+export type StateType = {
+  todos: TodosType[];
+};
