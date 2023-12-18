@@ -1,0 +1,16 @@
+{
+  "todos": [
+    {
+      "id": "8ca7e627-2eb4-6291-b023-d5250ba1b613",
+      "title": "타입 스크립트 공부하기 ",
+      "content": "강의 듣기",
+      "isDone": false
+    },
+    {
+      "id": "c05a1390-d903-548b-0a00-e8c191a5c443",
+      "title": "리액트 공부하기",
+      "content": "강의 듣기",
+      "isDone": false
+    }
+  ]
+}
